@@ -50,6 +50,22 @@ DUMPED;
 
 		$this->assertEquals($expected, $result);
 
+		$database->execute_import_files(array(
+			__DIR__.'/../test_data/importfile.php'
+		));
+
+		$result = $database->pdo()->query('SELECT * FROM table1')->fetchAll(\PDO::FETCH_NUM);
+
+		$expected = array(
+			array(3, 'test3', 'test test3', 0.22),
+			array(4, 'test4', 'test test4', 231.99),
+			array(8, 'test8', 'test test8', 8.32),
+			array(9, 'test9', 'test test9', 9.32),
+		);
+
+		$this->assertEquals($expected, $result);
+
+
 	}
 }
 

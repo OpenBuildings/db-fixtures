@@ -121,6 +121,20 @@ class Fixture {
 	}
 
 	/**
+	 * Execute Some PHP Files
+	 * @param  array $files 
+	 * @return Fixture        $this
+	 */
+	public function execute_import_files(array $files)
+	{
+		foreach ($files as $file) 
+		{
+			include $file;
+		}
+		return $this;
+	}
+
+	/**
 	 * Load the contents of a sql script file, containing inserts and flush tables
 	 * @param  string $file 
 	 * @return Fixture       $this
