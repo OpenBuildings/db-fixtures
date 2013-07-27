@@ -78,25 +78,25 @@ class Fixture {
 	 * @param  string $file sql inserts file
 	 * @return Fixture       $this
 	 */
-	public function replace($file)
+	public function replace($sql)
 	{
 		$this->truncate_all();
 
-		$this->load($file);
+		$this->load($sql);
 
 		return $this;
 	}
 
 	/**
-	 * Dump the contents of the database as insert scripts
-	 * @param  string $file 
-	 * @return Fixture $this
+	 * Dump the contents of the database as insert statements
+	 * 
+	 * @return string
 	 */
-	public function dump($file)
+	public function dump()
 	{
-		$handle = fopen($file, 'w');
-
 		$pdo = $this->pdo();
+
+		$sql = '';
 
 		foreach ($this->list_tables() as $table)
 		{
@@ -111,13 +111,11 @@ class Fixture {
 					$values[] = $pdo->quote($column);
 				}
 
-				fputs($handle, "INSERT INTO `{$table}` VALUES (".join(',', $values). ");\n");
+				$sql .= "INSERT INTO `{$table}` VALUES (".join(',', $values). ");\n";
 			}
 		}
 
-		fclose($handle);
-
-		return $this;
+		return $sql;
 	}
 
 	/**
@@ -139,20 +137,9 @@ class Fixture {
 	 * @param  string $file 
 	 * @return Fixture       $this
 	 */
-	public function load($file)
+	public function load($sql)
 	{
-		$handle = fopen($file, 'r');
-
-		while (($sql_line = fgets($handle)) !== FALSE) 
-		{
-			if (trim($sql_line)) 
-			{
-				$this->pdo()->exec($sql_line);
-			}
-		}
-		
-		fclose($handle);
-
+		$this->pdo()->exec($sql);
 		$this->pdo()->exec('FLUSH TABLES');
 
 		return $this;

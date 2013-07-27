@@ -14,28 +14,24 @@ class Driver_KohanaTest extends PHPUnit_Framework_TestCase {
 		$database = new Fixture();
 		$database->connect('mysql:host=localhost;dbname=test-db-fixtures', 'root');
 
-		$database->load(__DIR__.'/../test_data/database.sql');
+		$database->load(file_get_contents(__DIR__.'/../test_data/database.sql'));
 
 		$this->assertEquals(array('table1', 'table2'), $database->list_tables());
 
 		$database->pdo()->exec('INSERT INTO table1 SET id = 1, name = "test1", description = "test test", price = 0.32');
 		$database->pdo()->exec('INSERT INTO table1 SET id = 2, name = "test2", description = "test test2", price = 0.11');
 		
-		$database->dump(__DIR__.'/../test_data/dumped.sql');
+		$dumped = $database->dump();
 
 		$expected = <<<DUMPED
 INSERT INTO `table1` VALUES ('1','test1','test test','0.32');
 INSERT INTO `table1` VALUES ('2','test2','test test2','0.11');
 
 DUMPED;
-		
-		$dumped = file_get_contents(__DIR__.'/../test_data/dumped.sql');
 
 		$this->assertEquals($expected, $dumped);
 
-		unlink(__DIR__.'/../test_data/dumped.sql');
-
-		$database->replace(__DIR__.'/../test_data/replacement.sql');
+		$database->replace(file_get_contents(__DIR__.'/../test_data/replacement.sql'));
 
 
 		$database = new Fixture();
