@@ -108,7 +108,7 @@ class Fixture {
 
 				foreach ($row as $column) 
 				{
-					$values[] = $pdo->quote($column);
+					$values[] = is_null($column) ? 'NULL' : $pdo->quote($column);
 				}
 
 				$sql .= "INSERT INTO `{$table}` VALUES (".join(',', $values). ");\n";

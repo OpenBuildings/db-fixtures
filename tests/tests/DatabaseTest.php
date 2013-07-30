@@ -20,12 +20,14 @@ class Driver_KohanaTest extends PHPUnit_Framework_TestCase {
 
 		$database->pdo()->exec('INSERT INTO table1 SET id = 1, name = "test1", description = "test test", price = 0.32');
 		$database->pdo()->exec('INSERT INTO table1 SET id = 2, name = "test2", description = "test test2", price = 0.11');
+		$database->pdo()->exec('INSERT INTO table1 SET id = 3, name = NULL, description = "", price = NULL');
 		
 		$dumped = $database->dump();
 
 		$expected = <<<DUMPED
 INSERT INTO `table1` VALUES ('1','test1','test test','0.32');
 INSERT INTO `table1` VALUES ('2','test2','test test2','0.11');
+INSERT INTO `table1` VALUES ('3',NULL,'',NULL);
 
 DUMPED;
 
