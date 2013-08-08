@@ -3,9 +3,10 @@
 namespace Openbuildings\DBFixtures;
 
 /**
- * @package Openbuildings/DBFixture
- * @author Ivan Kerin
- * @copyright  (c) 2011-2013 Despark Ltd.
+ * @package    Openbuildings\DBFixture
+ * @author     Ivan Kerin
+ * @copyright  (c) 2013 OpenBuildings Ltd.
+ * @license    http://spdx.org/licenses/BSD-3-Clause
  */
 class Fixture {
 
@@ -71,6 +72,8 @@ class Fixture {
 		{
 			$this->truncate($table);
 		}
+
+		return $this;
 	}
 
 	/**
