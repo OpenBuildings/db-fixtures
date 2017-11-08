@@ -57,7 +57,13 @@ class Fixture {
 	 */
 	public function truncate($table)
 	{
-		$this->pdo()->exec("TRUNCATE TABLE `{$table}`");
+		$sql = <<<SQL
+		SET FOREIGN_KEY_CHECKS = 0;
+		TRUNCATE TABLE `{$table}`;
+		SET FOREIGN_KEY_CHECKS = 1;
+SQL;
+
+		$this->pdo()->exec($sql);
 
 		return $this;
 	}
