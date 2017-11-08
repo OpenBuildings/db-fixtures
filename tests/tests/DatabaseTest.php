@@ -1,13 +1,14 @@
 <?php
 
 use Openbuildings\DBFixtures\Fixture;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package spiderling
  * @group   driver
  * @group   driver.kohana
  */
-class Driver_KohanaTest extends PHPUnit_Framework_TestCase {
+class Driver_KohanaTest extends TestCase {
 
 	public function test_connect()
 	{
