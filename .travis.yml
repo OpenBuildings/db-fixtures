@@ -4,14 +4,16 @@ language: php
 sudo: false
 
 php:
-  - 7.0
   - 7.1
   - 7.2
+  - 7.3
 
 env:
   - DEPS=normal
   - DEPS=highest
   - DEPS=lowest
+
+services: mysql
 
 matrix:
   fast_finish: true
